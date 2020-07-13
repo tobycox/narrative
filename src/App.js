@@ -1,23 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-import './App.css';
-import Images from './Images.js';
+import "./App.css";
+import Images from "./Images.js";
 
 function App() {
-  const [data, setData] = useState({ hits: [] });
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(async () => {
-    const result = await axios(
-      'https://hn.algolia.com/api/v1/search?query=redux',
-    );
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
 
-    setData(result.data);
+      const result = await axios("https://cully-api.herokuapp.com/images");
+
+      const images = JSON.parse(result.data);
+      setData(images.data);
+      setIsLoading(false);
+    };
+    fetchData();
   }, []);
 
   return (
     <div className="App">
-      <Images images={data} />
+      {isLoading ? <div>Loading</div> : <Images images={data} />}
     </div>
   );
 }
