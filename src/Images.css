@@ -1,4 +1,15 @@
+.Images {
+  position: relative;
+}
+
 .Image {
   width: 100%;
   object-fit: cover;
+}
+
+.Box {
+  position: absolute;
+  border: 5px solid white;
+  width: 100px;
+  height: 100px;
 }

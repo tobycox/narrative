@@ -5,7 +5,7 @@ import "./App.css";
 import Images from "./Images.js";
 
 function App() {
-  const [data, setData] = useState([]);
+  const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -14,18 +14,23 @@ function App() {
 
       const result = await axios("https://cully-api.herokuapp.com/images");
 
-      const images = JSON.parse(result.data);
-      setData(images.data);
+      const imagesJSON = JSON.parse(result.data);
+      setImages(imagesJSON.data);
       setIsLoading(false);
     };
     fetchData();
   }, []);
 
-  return (
-    <div className="App">
-      {isLoading ? <div>Loading</div> : <Images images={data} />}
-    </div>
-  );
+  const renderContent = () => {
+    if (isLoading) {
+      return <div>Loading...</div>;
+    } else if (images.length === 0) {
+      return <div>No images</div>;
+    } else {
+      return <Images images={images} />;
+    }
+  };
+  return <div className="App">{renderContent()}</div>;
 }
 
 export default App;
