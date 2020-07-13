@@ -30,7 +30,12 @@ function App() {
       return <Images images={images} />;
     }
   };
-  return <div className="App">{renderContent()}</div>;
+  return (
+    <div className="App">
+      <h1>The designs were shit anyway</h1>
+      {renderContent()}
+    </div>
+  );
 }
 
 export default App;
